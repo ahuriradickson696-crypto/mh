@@ -4,7 +4,10 @@ import { PageHero } from '@/components/PageHero';
 import { useRouter } from '@/router/Router';
 import { BackgroundCarousel } from '@/components/BackgroundCarousel';
 import { pageImages } from '@/data/pageImages';
+import { videosFor } from '@/data/pageVideos';
 import { useApply } from '@/components/ApplyContext';
+import { TikTokStrip } from '@/components/TikTokEmbed';
+import { tiktoksByCategory, galleryTikToks } from '@/data/galleryMedia';
 
 const campusImage = '/images/campus-building.jpg';
 const sportsImage = '/images/graduates-laughing.jpg';
@@ -16,7 +19,7 @@ export function StudentLife() {
   return (
     <div className="page-content">
       <PageHero
-        images={pageImages.studentlife}
+videos={videosFor('studentlife')}         images={pageImages.studentlife}
         eyebrow="Campus experience"
         title={<>Life at <em>Avance</em></>}
         subtitle="Our goal is to provide you with resources that help enrich both the student experience and campus life here at Avance International University. From academic support to sports, innovation, and community engagement, there is something for everyone."
@@ -163,8 +166,14 @@ export function StudentLife() {
         </div>
       </section>
 
+      <TikTokStrip
+        items={galleryTikToks.filter((x) => x.category === 'campus' || x.category === 'admissions').slice(0, 3)}
+        title={<>Student life on <em>TikTok.</em></>}
+        subtitle="Campus energy and welcome moments from AVIU channels."
+      />
+
       <section className="cta-section">
-        <BackgroundCarousel images={pageImages.studentlife} overlay={0.88} />
+        <BackgroundCarousel images={pageImages.studentlife} overlay={0.88}  videos={videosFor('studentlife')} />
         <div>
           <div className="eyebrow eyebrow-light">
             <span className="eyebrow-line" /> Ready to join?

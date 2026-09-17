@@ -1,6 +1,7 @@
 import { ArrowRight, Clock, Award } from 'lucide-react';
-import { faculties } from '@/data/university';
+import { faculties, programmeSlug } from '@/data/university';
 import { SubPageHero } from '@/components/SubPageHero';
+import { videosFor } from '@/data/pageVideos';
 import { useRouter } from '@/router/Router';
 import { BackgroundCarousel } from '@/components/BackgroundCarousel';
 import { pageImages } from '@/data/pageImages';
@@ -18,7 +19,7 @@ export function UndergraduateStudy() {
   return (
     <div className="page-content">
       <SubPageHero
-        images={pageImages.study}
+videos={videosFor('study')}         images={pageImages.study}
         eyebrow="Degree level"
         title={<>Undergraduate <em>Study</em></>}
         subtitle="Begin your academic journey with a bachelor's degree, diploma, or certificate. Our undergraduate programmes combine theory with hands-on practice to prepare you for the workforce or further study."
@@ -37,13 +38,16 @@ export function UndergraduateStudy() {
             <div className="programme-row" key={i}>
               <div className="programme-row-main">
                 <span className="programme-faculty-tag">{p.faculty}</span>
-                <strong>{p.name}</strong>
+                <strong style={{ cursor: 'pointer' }} onClick={() => navigate(`/study/programme/${programmeSlug(p.name)}`)}>{p.name}</strong>
               </div>
               <p className="programme-desc">{p.description}</p>
               <div className="programme-row-meta">
                 <span className="programme-level-tag">{p.level}</span>
                 <span className="programme-duration"><Clock size={13} /> {p.duration}</span>
               </div>
+              <button className="text-link" style={{ marginTop: 8 }} onClick={() => navigate(`/study/programme/${programmeSlug(p.name)}`)}>
+                View full details <ArrowRight size={15} />
+              </button>
             </div>
           ))}
         </div>
@@ -61,13 +65,16 @@ export function UndergraduateStudy() {
             <div className="programme-row" key={i}>
               <div className="programme-row-main">
                 <span className="programme-faculty-tag">{p.faculty}</span>
-                <strong>{p.name}</strong>
+                <strong style={{ cursor: 'pointer' }} onClick={() => navigate(`/study/programme/${programmeSlug(p.name)}`)}>{p.name}</strong>
               </div>
               <p className="programme-desc">{p.description}</p>
               <div className="programme-row-meta">
                 <span className="programme-level-tag">{p.level}</span>
                 <span className="programme-duration"><Clock size={13} /> {p.duration}</span>
               </div>
+              <button className="text-link" style={{ marginTop: 8 }} onClick={() => navigate(`/study/programme/${programmeSlug(p.name)}`)}>
+                View full details <ArrowRight size={15} />
+              </button>
             </div>
           ))}
         </div>
@@ -109,7 +116,7 @@ export function UndergraduateStudy() {
       </section>
 
       <section className="cta-section">
-        <BackgroundCarousel images={pageImages.study} overlay={0.88} />
+        <BackgroundCarousel images={pageImages.study} overlay={0.88}  videos={videosFor('study')} />
         <div>
           <div className="eyebrow eyebrow-light"><span className="eyebrow-line" /> Ready to start?</div>
           <h2>Apply for undergraduate study.</h2>

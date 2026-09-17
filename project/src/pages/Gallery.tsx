@@ -1,93 +1,184 @@
-import { useState } from 'react';
-import { X } from 'lucide-react';
+import { useState, useMemo, useEffect, useRef } from 'react';
+import { X, Volume2, VolumeX } from 'lucide-react';
 import { PageHero } from '@/components/PageHero';
-import { pageImages, allGallery } from '@/data/pageImages';
+import { pageImages } from '@/data/pageImages';
+import { videosFor } from '@/data/pageVideos';
+import {
+  galleryFeed,
+  galleryCategories,
+  type GalleryItem,
+} from '@/data/galleryMedia';
+import { TikTokEmbed } from '@/components/TikTokEmbed';
 
-const labels: Record<string, string> = {
-  'campus-aviu-students-1.jpg': 'Campus life — students',
-  'campus-aviu-event-1.jpg': 'Campus event',
-  'campus-aviu-students-2.jpg': 'Students on campus',
-  'campus-aviu-event-2.jpg': 'University event',
-  'campus-aviu-extra.jpg': 'Campus activities',
-  'campus-aviu-students-3.jpg': 'Student community',
-  'university-gate.jpg': 'University gate',
-  'campus-aerial.jpg': 'Campus aerial view',
-  'campus-building.jpg': 'Campus buildings',
-  'award-ceremony.jpg': 'Award ceremony',
-  'award-ceremony copy.jpg': 'Recognition event',
-  'board-meeting.jpg': 'Board meeting',
-  'classroom-anatomy.jpg': 'Anatomy classroom',
-  'classroom-discussion.jpg': 'Classroom discussion',
-  'classroom-students.jpg': 'Students in class',
-  'conference-audience.jpg': 'Conference',
-  'graduand-portrait.jpg': 'Graduand',
-  'graduates-group.jpg': 'Graduates group',
-  'graduates-laughing.jpg': 'Graduation celebrations',
-  'graduation-ceremony.jpg': 'Graduation ceremony',
-  'graduation-crowd.jpg': 'Graduation crowd',
-  'guest-lecture.jpg': 'Guest lecture',
-  'lab-equipment-visit.jpg': 'Lab equipment visit',
-  'lab-herbal.jpg': 'Herbal medicine lab',
-  'lab-microscope.jpg': 'Microscope lab',
-  'lab-pharmacy.jpg': 'Pharmacy lab',
-  'medical-facility-tour.jpg': 'Medical facility tour',
-  'mou-signing.jpg': 'MoU signing',
-  'partnership-bathspa.jpg': 'Partnership event',
-  'poetry-presentation.jpg': 'Poetry presentation',
-  'senate-meeting.jpg': 'Senate meeting',
-  'staff-booth.jpg': 'Staff booth',
-};
-
-function getLabel(src: string) {
-  const name = src.split('/').pop() || '';
-  return labels[name] || name.replace(/\.[^.]+$/, '').replace(/-/g, ' ');
-}
+const YOUTUBE_IDS = ['XPQdBYI9vcU', 'qqWsn74VlT0', 'cQWuuKjoh44', 'aTqd3eX377U', 'gOdpEUC96vY'];
 
 export function Gallery() {
+  const [filter, setFilter] = useState<string>('all');
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [ytIndex, setYtIndex] = useState(0);
+  const [muted, setMuted] = useState(true);
+  const timerRef = useRef<number | null>(null);
+
+  const items = useMemo(() => {
+    if (filter === 'all') return galleryFeed;
+    return galleryFeed.filter((i) => i.category === filter);
+  }, [filter]);
+
+  const photos = items.filter((i): i is Extract<GalleryItem, { type: 'photo' }> => i.type === 'photo');
+  const videos = items.filter((i): i is Extract<GalleryItem, { type: 'tiktok' }> => i.type === 'tiktok');
+
+  // Auto-advance YouTube every 45s
+  useEffect(() => {
+    timerRef.current = window.setInterval(() => {
+      setYtIndex((i) => (i + 1) % YOUTUBE_IDS.length);
+    }, 45000);
+    return () => {
+      if (timerRef.current) window.clearInterval(timerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.title = 'Gallery | Avance International University';
+  }, []);
+
+  const ytId = YOUTUBE_IDS[ytIndex];
+  const mute = muted ? 1 : 0;
 
   return (
     <div className="page-content">
       <PageHero
-        images={pageImages.gallery.slice(0, 6)}
-        eyebrow="Campus gallery"
-        title={<>Life at <em>Avance</em></>}
-        subtitle="Explore our campus, classrooms, labs, graduations, and student life through photos from Avance International University."
+videos={videosFor('gallery')}         images={pageImages.gallery?.slice?.(0, 6) || pageImages.home}
+        eyebrow="Media gallery"
+        title={
+          <>
+            Campus <em>media</em>
+          </>
+        }
+        subtitle="YouTube campus videos first, then photos, then TikTok."
       />
 
       <section className="section-pad">
+        {/* YOUTUBE FIRST */}
         <div className="section-heading">
           <div>
             <div className="eyebrow">
-              <span className="eyebrow-line" /> Photo gallery
+              <span className="eyebrow-line" /> YouTube
             </div>
             <h2>
-              Moments from <em>Nabweru campus.</em>
+              Campus <em>videos.</em>
             </h2>
           </div>
         </div>
-        <div className="gallery-grid">
-          {allGallery.map((src) => (
+
+        <div className="gallery-youtube-player">
+          <iframe
+            key={`${ytId}-${mute}`}
+            src={`https://www.youtube.com/embed/${ytId}?autoplay=1&mute=${mute}&playsinline=1&rel=0&modestbranding=1&controls=1`}
+            title="AVIU campus video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            allowFullScreen
+          />
+          <div className="gallery-youtube-controls">
+            <button type="button" onClick={() => setMuted((m) => !m)} aria-label={muted ? 'Unmute' : 'Mute'}>
+              {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+              <span>{muted ? 'Unmute' : 'Mute'}</span>
+            </button>
+            <div className="gallery-youtube-tabs">
+              {YOUTUBE_IDS.map((id, i) => (
+                <button
+                  key={id}
+                  type="button"
+                  className={i === ytIndex ? 'is-active' : ''}
+                  onClick={() => setYtIndex(i)}
+                >
+                  Video {i + 1}
+                </button>
+              ))}
+            </div>
+            <span className="gallery-youtube-hint">Auto-plays next every 45s</span>
+          </div>
+        </div>
+
+        <div className="gallery-filters" role="tablist" aria-label="Gallery categories" style={{ marginTop: 40 }}>
+          {galleryCategories.map((c) => (
             <button
-              key={src}
+              key={c.id}
               type="button"
-              className="gallery-item"
-              onClick={() => setLightbox(src)}
-              aria-label={getLabel(src)}
+              role="tab"
+              aria-selected={filter === c.id}
+              className={`gallery-filter-btn ${filter === c.id ? 'is-active' : ''}`}
+              onClick={() => setFilter(c.id)}
             >
-              <img src={src} alt={getLabel(src)} loading="lazy" />
-              <span className="gallery-caption">{getLabel(src)}</span>
+              {c.label}
             </button>
           ))}
         </div>
+
+        <p className="results-count" style={{ marginTop: 16 }}>
+          {photos.length} photo{photos.length !== 1 ? 's' : ''}
+          {videos.length > 0 ? ` · ${videos.length} TikTok${videos.length !== 1 ? 's' : ''}` : ''}
+        </p>
+
+        {/* PHOTOS */}
+        {photos.length > 0 && (
+          <>
+            <div className="section-heading" style={{ marginTop: 28 }}>
+              <div>
+                <div className="eyebrow">
+                  <span className="eyebrow-line" /> Photos
+                </div>
+                <h2>
+                  Photo <em>gallery.</em>
+                </h2>
+              </div>
+            </div>
+            <div className="gallery-grid">
+              {photos.map((p) => (
+                <button
+                  type="button"
+                  key={p.id}
+                  className="gallery-item"
+                  onClick={() => setLightbox(p.src)}
+                  aria-label={`Open ${p.title}`}
+                >
+                  <img src={p.src} alt={p.alt} loading="lazy" />
+                  <span className="gallery-caption">{p.title}</span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* TIKTOK LAST */}
+        {videos.length > 0 && (
+          <>
+            <div className="section-heading" style={{ marginTop: 48 }}>
+              <div>
+                <div className="eyebrow">
+                  <span className="eyebrow-line" /> TikTok
+                </div>
+                <h2>
+                  On <em>TikTok.</em>
+                </h2>
+              </div>
+            </div>
+            <div className="tiktok-gallery-grid">
+              {videos.map((v) => (
+                <div key={v.id} className="tiktok-gallery-card">
+                  <TikTokEmbed item={v} />
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </section>
 
       {lightbox && (
-        <div className="gallery-lightbox" onClick={() => setLightbox(null)} role="dialog" aria-modal="true">
-          <button type="button" className="gallery-lightbox-close" onClick={() => setLightbox(null)} aria-label="Close">
+        <div className="lightbox" onClick={() => setLightbox(null)} role="dialog" aria-modal="true">
+          <button type="button" className="lightbox-close" aria-label="Close" onClick={() => setLightbox(null)}>
             <X size={24} />
           </button>
-          <img src={lightbox} alt={getLabel(lightbox)} onClick={(e) => e.stopPropagation()} />
+          <img src={lightbox} alt="" onClick={(e) => e.stopPropagation()} />
         </div>
       )}
     </div>

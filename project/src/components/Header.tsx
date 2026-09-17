@@ -6,35 +6,14 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { useApply } from '@/components/ApplyContext';
 
 const announcements = [
-  'Admissions for the January, May & August intakes are now open — apply today',
-  'Four faculties. Over 30 programmes. Find your path at AVIU',
-  'Merit scholarships cover 25–50% of tuition for qualifying students',
-  'January 2027 intake orientation begins 10 January — welcome to AVIU',
-  'Open Day for prospective students: 25 October 2026 — register now',
-  'AVIU Innovation Fair 2026: 15 September — see student projects on display',
-  'Annual Research Conference: 5 October — faculty and postgraduate presentations',
-  'Student Startup Pitch Competition: 8 November — watch AVIU entrepreneurs shine',
-  'Public Health Symposium: 15 November — tackling East African health challenges',
-  'Faculty of Nursing Graduation Ceremony: 20 September',
-  'Faculty of Education Graduation Ceremony: 5 December',
-  '85% graduate employment rate within six months of finishing',
-  '3M+ video lessons available on-demand through our e-learning platform',
-  '2,500+ daily live classes with interactive participation',
-  'Flexible payment plans: pay in 2–3 instalments per semester, no interest',
-  'International students from across East Africa and beyond — visa support provided',
-  'Minimum IELTS 6.0, TOEFL 80, or PTE 50 for international applicants',
-  'Credit transfer available — up to 50% of programme credits from prior study',
-  'Recognition of Prior Learning (RPL): turn work experience into academic credit',
-  'On-campus halls of residence with Wi-Fi, utilities, and 24/7 security included',
-  '20+ student clubs and societies — from debate to drama to football',
-  'Free airport pickup for new international students on designated dates',
-  'Innovation Centre with modern labs and prototyping equipment — open to all students',
-  'Advanced nursing simulation lab with high-fidelity patient manikins',
-  'Community Engagement Day: 12 October — giving back to Kampala',
-  'Mature Age Entry Scheme available for applicants aged 21 and above',
-  'Early-bird discount: 10% off tuition when you pay 30 days before the semester starts',
-  '2,000+ alumni across 12 regional chapters in East Africa and beyond',
-  'ASIC accredited · ISO 9001:2015 · THE Impact Rankings · Pearson Edexcel',
+  { text: 'Applications open — January, May, August & September intakes', image: '/images/admission-poster.jpeg' },
+  { text: 'Graduation Day: 25 September every year — all faculties', image: '/images/graduation-ceremony.jpg' },
+  { text: '25 NCHE-accredited bachelor programmes · Nabweru, Wakiso', image: '/images/campus-building.jpg' },
+  { text: 'International students welcome — visa guidance available', image: '/images/campus-aviu-students-1.jpg' },
+  { text: 'Nursing & health pathways — contact Admissions for current intake', image: '/images/medical-facility-tour.jpg' },
+  { text: 'Education programmes for future teachers — school practice included', image: '/images/classroom-students.jpg' },
+  { text: 'Visit campus: Nabweru, Wakiso · +256 700 670 691', image: '/images/university-gate.jpg' },
+  { text: 'Campus life & student community at AVIU', image: '/images/campus-aviu-event-1.jpg' },
 ];
 
 type NavGroup = {
@@ -49,11 +28,10 @@ const navGroups: NavGroup[] = [
       { label: 'All Programmes', path: '/study' },
       { label: 'Undergraduate', path: '/study/undergraduate' },
       { label: 'Postgraduate & Doctoral', path: '/study/postgraduate' },
-      { label: 'Online & E-Learning', path: '/study/online' },
-      { label: 'E-Learning Portal', path: '/elearning' },
+      { label: 'Online learning info', path: '/study/online' },
       { label: 'International Study', path: '/study/international' },
       { label: 'Course Finder', path: '/study/course-finder' },
-      { label: 'Fees & Tuition', path: '/fees' },
+      { label: 'Fees (Coming Soon)', path: '/fees' },
     ],
   },
   {
@@ -73,7 +51,7 @@ const navGroups: NavGroup[] = [
     items: [
       { label: 'Research Overview', path: '/research' },
       { label: 'Research Centres', path: '/research/centres' },
-      { label: 'PhD Opportunities', path: '/research/phd-opportunities' },
+      { label: 'PhD (Coming Soon)', path: '/research/phd-opportunities' },
       { label: 'Publications & Repository', path: '/research/publications' },
     ],
   },
@@ -127,6 +105,9 @@ export function Header() {
   const [announcementIndex, setAnnouncementIndex] = useState(0);
   const [currentDate, setCurrentDate] = useState('');
   const { path, navigate } = useRouter();
+  const goHome = () => navigate('/');
+  const isHome = path === '/' || path === '';
+
   const { openApply } = useApply();
 
   useEffect(() => {
@@ -162,7 +143,15 @@ export function Header() {
         <span className="announcement-dot" />
         <span className="announcement-date">{currentDate}</span>
         <span className="announcement-divider" />
-        <span className="announcement-text" key={announcementIndex}>{announcements[announcementIndex]}</span>
+        <span className="announcement-ad" key={announcementIndex}>
+          <img src={announcements[announcementIndex].image} alt="" className="announcement-ad-img" width={48} height={32} />
+          <span className="announcement-text">{announcements[announcementIndex].text}</span>
+        </span>
+        {!isHome && (
+          <button type="button" className="announcement-home-btn" onClick={goHome} aria-label="Go to home page">
+            Home
+          </button>
+        )}
         <button onClick={openApply}>Apply now</button>
       </div>
       <header
@@ -183,7 +172,19 @@ export function Header() {
             <small>INTERNATIONAL UNIVERSITY</small>
           </span>
         </a>
-        <nav className={`main-nav ${menuOpen ? 'is-open' : ''}`}>
+        <nav className={`main-nav ${menuOpen ? 'is-open' : ''}`} aria-hidden={!menuOpen}>
+          <div className="nav-logo-bg" aria-hidden="true">
+            <img src="/images/aviu-logo-full.png" alt="" />
+          </div>
+          <div className="nav-mobile-panel">
+            <div className="nav-mobile-brand">
+              <img src="/images/aviu-logo.png" alt="" width={48} height={48} />
+              <div>
+                <strong>AVANCE</strong>
+                <small>International University</small>
+              </div>
+            </div>
+          <button type="button" className="nav-home-item" onClick={() => go('/')} style={{ fontWeight: 700, marginRight: 8 }}>Home</button>
           {navGroups.map((group) => (
             <div
               className="nav-group"
@@ -224,18 +225,10 @@ export function Header() {
               )}
             </div>
           ))}
-          <a
-            className="nav-apply mobile-apply"
-            href="#/elearning"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: 'none', marginTop: 8 }}
-          >
-            E-Learning Portal
-          </a>
           <button className="nav-apply mobile-apply" onClick={openApply}>
             Apply to AVIU
           </button>
+          </div>
         </nav>
         <div className="header-actions">
           <button
@@ -246,14 +239,6 @@ export function Header() {
             <Search size={19} />
           </button>
           <ThemeToggle />
-          <a
-            className="nav-apply"
-            href="#/elearning"
-            onClick={(e) => { e.preventDefault(); go('/elearning'); }}
-            style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}
-          >
-            E-Learning
-          </a>
           <button className="nav-apply" onClick={openApply}>
             Apply to AVIU
           </button>
