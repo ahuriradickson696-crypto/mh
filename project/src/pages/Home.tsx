@@ -407,26 +407,6 @@ export function Home() {
         </div>
       </section>
 
-      
-      <section className="section-pad" style={{ paddingTop: 0, paddingBottom: 0 }}>
-        <div className="elearn-banner">
-          <div>
-            <h3>Study on your phone</h3>
-            <p>
-              Use the AVIU E-Learning Portal for classes, materials, and results — built to work on mobile.
-            </p>
-          </div>
-          <a
-            className="btn-light"
-            href="#/elearning" onClick={(e) => { e.preventDefault(); navigate('/elearning'); }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open E-Learning Portal
-          </a>
-        </div>
-      </section>
-
       <section className="cta-section">
         <BackgroundCarousel images={pageImages.home} overlay={0.88} />
         <div>

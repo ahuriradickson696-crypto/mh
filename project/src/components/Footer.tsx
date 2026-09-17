@@ -48,7 +48,7 @@ export function Footer() {
             <a href="https://x.com/AvanceIU_uganda" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><Twitter size={15} /></a>
             <a href="https://ug.linkedin.com/company/avance-international-university" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin size={15} /></a>
             <a href="https://aviu.ac.ug/" target="_blank" rel="noopener noreferrer" aria-label="Official website"><Facebook size={15} /></a>
-            <a href="#/elearning" onClick={(e) => { e.preventDefault(); navigate('/elearning'); }} aria-label="E-learning"><Youtube size={15} /></a>
+            <a href="https://elearning.aviu.ac.ug/" target="_blank" rel="noopener noreferrer" aria-label="E-learning"><Youtube size={15} /></a>
           </div>
         </div>
         <div className="footer-links">
@@ -117,7 +117,7 @@ export function Footer() {
         <span>© 2026 {universityInfo.name}</span>
         <span>Nabweru, Wakiso · Uganda &nbsp; / &nbsp; {universityInfo.tagline}</span>
         <a onClick={link('/privacy')} style={{ cursor: 'pointer' }}>Privacy &amp; terms</a>
-        <a href="#/elearning" onClick={(e) => { e.preventDefault(); navigate('/elearning'); }} style={{ cursor: 'pointer' }}>E-Learning</a>
+        <a href="https://elearning.aviu.ac.ug/" target="_blank" rel="noopener noreferrer" style={{ cursor: 'pointer' }}>Student portal</a>
       </div>
     </footer>
   );

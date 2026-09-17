@@ -49,8 +49,7 @@ const navGroups: NavGroup[] = [
       { label: 'All Programmes', path: '/study' },
       { label: 'Undergraduate', path: '/study/undergraduate' },
       { label: 'Postgraduate & Doctoral', path: '/study/postgraduate' },
-      { label: 'Online & E-Learning', path: '/study/online' },
-      { label: 'E-Learning Portal', path: '/elearning' },
+      { label: 'Online & Flexible', path: '/study/online' },
       { label: 'International Study', path: '/study/international' },
       { label: 'Course Finder', path: '/study/course-finder' },
       { label: 'Fees & Tuition', path: '/fees' },
@@ -117,11 +116,6 @@ const navGroups: NavGroup[] = [
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [menuOpen]);
   const [searchOpen, setSearchOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [announcementIndex, setAnnouncementIndex] = useState(0);
@@ -188,19 +182,13 @@ export function Header() {
             <div
               className="nav-group"
               key={group.label}
-              onMouseEnter={() => {
-                if (window.matchMedia('(min-width: 701px)').matches) setOpenDropdown(group.label);
-              }}
+              onMouseEnter={() => setOpenDropdown(group.label)}
             >
               <a
                 className={isActive(group) ? 'nav-active' : ''}
                 onClick={(e) => {
                   e.preventDefault();
-                  if (group.items.length > 1 && window.matchMedia('(max-width: 700px)').matches) {
-                    setOpenDropdown(openDropdown === group.label ? null : group.label);
-                  } else {
-                    go(group.items[0].path);
-                  }
+                  go(group.items[0].path);
                 }}
               >
                 {group.label}
@@ -224,15 +212,6 @@ export function Header() {
               )}
             </div>
           ))}
-          <a
-            className="nav-apply mobile-apply"
-            href="#/elearning"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: 'none', marginTop: 8 }}
-          >
-            E-Learning Portal
-          </a>
           <button className="nav-apply mobile-apply" onClick={openApply}>
             Apply to AIU
           </button>
@@ -248,11 +227,12 @@ export function Header() {
           <ThemeToggle />
           <a
             className="nav-apply"
-            href="#/elearning"
-            onClick={(e) => { e.preventDefault(); go('/elearning'); }}
+            href="https://elearning.aviu.ac.ug/"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}
           >
-            E-Learning
+            Portal
           </a>
           <button className="nav-apply" onClick={openApply}>
             Apply to AIU

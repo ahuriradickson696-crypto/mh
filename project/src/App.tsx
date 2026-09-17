@@ -46,7 +46,6 @@ import { OrgChart } from '@/pages/about/OrgChart';
 
 import { Directory } from '@/pages/contact/Directory';
 import { CampusSafety } from '@/pages/contact/CampusSafety';
-import { ElearningApp } from '@/elearning/ElearningApp';
 import { Gallery } from '@/pages/Gallery';
 import { AcademicCalendar } from '@/pages/AcademicCalendar';
 import { Privacy } from '@/pages/Privacy';
@@ -151,10 +150,6 @@ function Routes() {
         return <Home />;
     }
   };
-
-  if (path === '/elearning' || path.startsWith('/elearning/')) {
-    return <ElearningApp />;
-  }
 
   return (
     <div className="site-shell">
