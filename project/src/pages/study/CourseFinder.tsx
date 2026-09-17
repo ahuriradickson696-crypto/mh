@@ -46,9 +46,6 @@ export function CourseFinder() {
       'Level',
       'Tier Discipline',
       'Duration',
-      'Last Accreditation',
-      'Due for Review',
-      'Review Year',
       'District',
       'Description',
     ];
@@ -59,9 +56,6 @@ export function CourseFinder() {
         p.level,
         `"${p.tierDiscipline}"`,
         p.duration,
-        p.lastAccreditation,
-        p.dueForReview,
-        p.reviewYear,
         p.district,
         `"${p.description.replace(/"/g, '""')}"`,
       ].join(',')
@@ -98,7 +92,7 @@ export function CourseFinder() {
             Course <em>Finder</em>
           </>
         }
-        subtitle="Search all 25 NCHE-accredited bachelor programmes at Avance International University. Filter by faculty or discipline and download the catalogue (CSV / JSON)."
+        subtitle="Search all 25 NCHE-accredited bachelor programmes at Avance International University. Filter by faculty or discipline and download the catalogue (CSV / JSON). Accreditation years are held by the University and NCHE."
         crumbs={[
           { label: 'Home', path: '/' },
           { label: 'Study', path: '/study' },
@@ -177,7 +171,7 @@ export function CourseFinder() {
                       <Clock size={13} /> {p.duration}
                     </span>
                     <span style={{ fontSize: 12, color: 'var(--ink-muted)' }}>
-                      Accredited {p.lastAccreditation} · Review {p.reviewYear}
+                      NCHE accredited
                     </span>
                   </div>
                   <div style={{ display: 'flex', gap: 16, marginTop: 10, flexWrap: 'wrap' }}>

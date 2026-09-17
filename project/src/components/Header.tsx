@@ -6,14 +6,14 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { useApply } from '@/components/ApplyContext';
 
 const announcements = [
-  'Applications open — January, May, August & September intakes',
-  'Graduation Day: 25 September every year — all faculties',
-  '25 NCHE-accredited bachelor programmes · Nabweru, Wakiso',
-  'International students welcome — visa guidance available',
-  'Nursing & midwifery pathways — contact Admissions for current intake',
-  'Education programmes for future teachers — school practice included',
-  'Visit campus: Nabweru, Wakiso · +256 700 670 691',
-  'Follow AVIU on X @AvanceIU_uganda · TikTok @avance_iu_uganda',
+  { text: 'Applications open — January, May, August & September intakes', image: '/images/admission-poster.jpeg' },
+  { text: 'Graduation Day: 25 September every year — all faculties', image: '/images/graduation-ceremony.jpg' },
+  { text: '25 NCHE-accredited bachelor programmes · Nabweru, Wakiso', image: '/images/campus-building.jpg' },
+  { text: 'International students welcome — visa guidance available', image: '/images/campus-aviu-students-1.jpg' },
+  { text: 'Nursing & health pathways — contact Admissions for current intake', image: '/images/medical-facility-tour.jpg' },
+  { text: 'Education programmes for future teachers — school practice included', image: '/images/classroom-students.jpg' },
+  { text: 'Visit campus: Nabweru, Wakiso · +256 700 670 691', image: '/images/university-gate.jpg' },
+  { text: 'Campus life & student community at AVIU', image: '/images/campus-aviu-event-1.jpg' },
 ];
 
 type NavGroup = {
@@ -143,7 +143,10 @@ export function Header() {
         <span className="announcement-dot" />
         <span className="announcement-date">{currentDate}</span>
         <span className="announcement-divider" />
-        <span className="announcement-text" key={announcementIndex}>{announcements[announcementIndex]}</span>
+        <span className="announcement-ad" key={announcementIndex}>
+          <img src={announcements[announcementIndex].image} alt="" className="announcement-ad-img" width={48} height={32} />
+          <span className="announcement-text">{announcements[announcementIndex].text}</span>
+        </span>
         {!isHome && (
           <button type="button" className="announcement-home-btn" onClick={goHome} aria-label="Go to home page">
             Home
@@ -211,15 +214,6 @@ export function Header() {
               )}
             </div>
           ))}
-          <a
-            className="nav-apply mobile-apply"
-            href="#/elearning"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: 'none', marginTop: 8 }}
-          >
-            E-Learning Portal
-          </a>
           <button className="nav-apply mobile-apply" onClick={openApply}>
             Apply to AVIU
           </button>
@@ -233,14 +227,6 @@ export function Header() {
             <Search size={19} />
           </button>
           <ThemeToggle />
-          <a
-            className="nav-apply"
-            href="#/elearning"
-            onClick={(e) => { e.preventDefault(); go('/elearning'); }}
-            style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}
-          >
-            E-Learning
-          </a>
           <button className="nav-apply" onClick={openApply}>
             Apply to AVIU
           </button>

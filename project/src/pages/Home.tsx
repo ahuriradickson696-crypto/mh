@@ -5,17 +5,9 @@ import { useRouter } from '@/router/Router';
 import { useApply } from '@/components/ApplyContext';
 import { Carousel, type CarouselSlide } from '@/components/Carousel';
 import { BackgroundCarousel } from '@/components/BackgroundCarousel';
-import { pageImages, allGallery } from '@/data/pageImages';
+import { pageImages } from '@/data/pageImages';
 import { TikTokStrip } from '@/components/TikTokEmbed';
 import { galleryTikToks } from '@/data/galleryMedia';
-
-/** All website images for dissolving full-bleed backgrounds */
-const allSiteImages = [
-  ...allGallery,
-  '/images/admission-poster.jpeg',
-  '/images/avance-students-2.png',
-  '/images/avance-students-3.png',
-];
 
 const campusImage = '/images/campus-building.jpg';
 const studentsImage = '/images/classroom-students.jpg';
@@ -256,7 +248,7 @@ export function Home() {
           <img src={campusImage} alt="Avance students on campus" />
         </div>
         <div className="quote-copy">
-          <BackgroundCarousel images={allSiteImages} interval={4500} overlay={0.82} />
+          <BackgroundCarousel images={pageImages.home} overlay={0.9} />
           <span className="quote-mark">"</span>
           <blockquote>{t.quote}</blockquote>
           <div className="quote-person">
@@ -422,48 +414,14 @@ export function Home() {
 
       
 
-      {/* Full-bleed Ad section — ALL website images as BG, dissolve/crossfade per image */}
-      <section className="ad-page-section" aria-label="Admissions promotion">
-        <BackgroundCarousel images={allSiteImages} interval={4500} overlay={0.78} />
-        <div className="ad-page-content">
-          <div className="ad-text-line ad-text-1 eyebrow eyebrow-light">
-            <span className="eyebrow-line" /> Apply now
-          </div>
-          <h2 className="ad-text-line ad-text-2">
-            Your place at <em>AVIU</em> starts here.
-          </h2>
-          <p className="ad-text-line ad-text-3">
-            Applications open for January, May, August &amp; September intakes.
-            25 NCHE-accredited programmes · Nabweru, Wakiso · Uganda.
-          </p>
-          <div className="ad-page-actions ad-text-line ad-text-4">
-            <button className="button button-light" onClick={openApply}>
-              Start your application <ArrowRight size={17} />
-            </button>
-            <button className="button button-outline-light" onClick={() => navigate('/admissions')}>
-              Admissions info
-            </button>
-          </div>
-          <div className="ad-page-handles ad-text-line ad-text-5">
-            <span>Follow us</span>
-            <a href="https://x.com/AvanceIU_uganda" target="_blank" rel="noopener noreferrer">
-              X @AvanceIU_uganda
-            </a>
-            <a href="https://www.tiktok.com/@avance_iu_uganda" target="_blank" rel="noopener noreferrer">
-              TikTok @avance_iu_uganda
-            </a>
-          </div>
-        </div>
-      </section>
-
       <TikTokStrip
         items={galleryTikToks.filter((t) => ['campus', 'admissions', 'graduation'].includes(t.category)).slice(0, 4)}
         title={<>Campus life on <em>TikTok.</em></>}
-        subtitle="Watch student pulse, welcomes and graduation moments — @avance_iu_uganda"
+        subtitle="Watch student pulse, welcomes and graduation moments from official AVIU channels."
       />
 
       <section className="cta-section">
-        <BackgroundCarousel images={allSiteImages} interval={5000} overlay={0.85} />
+        <BackgroundCarousel images={pageImages.home} overlay={0.88} />
         <div>
           <div className="eyebrow eyebrow-light">
             <span className="eyebrow-line" /> Your next chapter starts here

@@ -84,7 +84,7 @@ export function ProgrammeDetail() {
             <div style={{ marginTop: 28, fontSize: 14, color: 'var(--ink-muted)' }}>
               <p>
                 <Award size={14} style={{ display: 'inline', verticalAlign: 'middle' }} /> NCHE
-                accredited: {programme.lastAccreditation} · Due for review: {programme.dueForReview}
+                accredited programme
               </p>
               <p>
                 <MapPin size={14} style={{ display: 'inline', verticalAlign: 'middle' }} />{' '}
