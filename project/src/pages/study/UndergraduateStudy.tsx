@@ -1,5 +1,5 @@
 import { ArrowRight, Clock, Award } from 'lucide-react';
-import { faculties, programmeSlug } from '@/data/university';
+import { faculties } from '@/data/university';
 import { SubPageHero } from '@/components/SubPageHero';
 import { useRouter } from '@/router/Router';
 import { BackgroundCarousel } from '@/components/BackgroundCarousel';
@@ -37,16 +37,13 @@ export function UndergraduateStudy() {
             <div className="programme-row" key={i}>
               <div className="programme-row-main">
                 <span className="programme-faculty-tag">{p.faculty}</span>
-                <strong style={{ cursor: 'pointer' }} onClick={() => navigate(`/study/programme/${programmeSlug(p.name)}`)}>{p.name}</strong>
+                <strong>{p.name}</strong>
               </div>
               <p className="programme-desc">{p.description}</p>
               <div className="programme-row-meta">
                 <span className="programme-level-tag">{p.level}</span>
                 <span className="programme-duration"><Clock size={13} /> {p.duration}</span>
               </div>
-              <button className="text-link" style={{ marginTop: 8 }} onClick={() => navigate(`/study/programme/${programmeSlug(p.name)}`)}>
-                View full details <ArrowRight size={15} />
-              </button>
             </div>
           ))}
         </div>
@@ -64,16 +61,13 @@ export function UndergraduateStudy() {
             <div className="programme-row" key={i}>
               <div className="programme-row-main">
                 <span className="programme-faculty-tag">{p.faculty}</span>
-                <strong style={{ cursor: 'pointer' }} onClick={() => navigate(`/study/programme/${programmeSlug(p.name)}`)}>{p.name}</strong>
+                <strong>{p.name}</strong>
               </div>
               <p className="programme-desc">{p.description}</p>
               <div className="programme-row-meta">
                 <span className="programme-level-tag">{p.level}</span>
                 <span className="programme-duration"><Clock size={13} /> {p.duration}</span>
               </div>
-              <button className="text-link" style={{ marginTop: 8 }} onClick={() => navigate(`/study/programme/${programmeSlug(p.name)}`)}>
-                View full details <ArrowRight size={15} />
-              </button>
             </div>
           ))}
         </div>

@@ -134,27 +134,6 @@ export function InternationalAdmissions() {
         </div>
       </section>
 
-
-      <section className="section-pad">
-        <div className="section-heading">
-          <div>
-            <div className="eyebrow"><span className="eyebrow-line" /> Documents checklist</div>
-            <h2>What international applicants should <em>prepare.</em></h2>
-          </div>
-        </div>
-        <ul className="requirements-list">
-          <li><span className="check-bullet"><FileText size={16} /></span> Certified copies of secondary school certificates and transcripts (with English translation if needed)</li>
-          <li><span className="check-bullet"><FileText size={16} /></span> Valid passport (minimum 6 months validity beyond intended stay)</li>
-          <li><span className="check-bullet"><FileText size={16} /></span> English proficiency evidence (IELTS / TOEFL / PTE) or waiver request if prior study was in English</li>
-          <li><span className="check-bullet"><FileText size={16} /></span> Passport-size photographs</li>
-          <li><span className="check-bullet"><FileText size={16} /></span> Personal statement (recommended)</li>
-          <li><span className="check-bullet"><FileText size={16} /></span> After offer: proof of funds and medical insurance for visa application</li>
-        </ul>
-        <p style={{ marginTop: 20, color: 'var(--ink-muted)', fontSize: 14 }}>
-          Email international@aviu.ac.ug or admissions@aviu.ac.ug with scanned documents after submitting the online enquiry. Fees information is Coming Soon — request a quote for your programme and nationality.
-        </p>
-      </section>
-
       <section className="cta-section">
         <BackgroundCarousel images={pageImages.admissions} overlay={0.88} />
         <div>
