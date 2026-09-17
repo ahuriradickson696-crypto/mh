@@ -5,8 +5,6 @@ import { useRouter } from '@/router/Router';
 import { BackgroundCarousel } from '@/components/BackgroundCarousel';
 import { pageImages } from '@/data/pageImages';
 import { useApply } from '@/components/ApplyContext';
-import { TikTokStrip } from '@/components/TikTokEmbed';
-import { tiktoksByCategory, galleryTikToks } from '@/data/galleryMedia';
 
 const campusImage = '/images/campus-building.jpg';
 const sportsImage = '/images/graduates-laughing.jpg';
@@ -123,7 +121,7 @@ export function StudentLife() {
 
       <section className="section-pad alt-bg">
         <div className="about-image-wrap banner-image">
-          <img src={sportsImage} alt="Sports and recreation at AVIU" />
+          <img src={sportsImage} alt="Sports and recreation at AIU" />
         </div>
       </section>
 
@@ -164,12 +162,6 @@ export function StudentLife() {
           </div>
         </div>
       </section>
-
-      <TikTokStrip
-        items={galleryTikToks.filter((x) => x.category === 'campus' || x.category === 'admissions').slice(0, 3)}
-        title={<>Student life on <em>TikTok.</em></>}
-        subtitle="Campus energy and welcome moments from AVIU channels."
-      />
 
       <section className="cta-section">
         <BackgroundCarousel images={pageImages.studentlife} overlay={0.88} />

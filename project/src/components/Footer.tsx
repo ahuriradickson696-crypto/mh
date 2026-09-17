@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Youtube, Send, Music2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Youtube, Send } from 'lucide-react';
 import { universityInfo } from '@/data/university';
 import { useRouter } from '@/router/Router';
 
@@ -47,9 +47,7 @@ export function Footer() {
           <div className="footer-socials">
             <a href="https://x.com/AvanceIU_uganda" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><Twitter size={15} /></a>
             <a href="https://ug.linkedin.com/company/avance-international-university" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin size={15} /></a>
-            <a href="https://www.facebook.com/avanceinternationaluniversity" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><Facebook size={15} /></a>
-            <a href="https://www.tiktok.com/@avancestudentpulse" target="_blank" rel="noopener noreferrer" aria-label="TikTok Student Pulse"><Music2 size={15} /></a>
-            <a href="https://www.tiktok.com/@avance.marketing" target="_blank" rel="noopener noreferrer" aria-label="TikTok Marketing"><Music2 size={15} /></a>
+            <a href="https://aviu.ac.ug/" target="_blank" rel="noopener noreferrer" aria-label="Official website"><Facebook size={15} /></a>
             <a href="#/elearning" onClick={(e) => { e.preventDefault(); navigate('/elearning'); }} aria-label="E-learning"><Youtube size={15} /></a>
           </div>
         </div>
@@ -80,11 +78,11 @@ export function Footer() {
           </div>
           <div>
             <strong>About</strong>
-            <a onClick={link('/about')}>About AVIU</a>
+            <a onClick={link('/about')}>About AIU</a>
             <a onClick={link('/about/leadership')}>Leadership</a>
             <a onClick={link('/about/organisation')}>Organisation</a>
             <a onClick={link('/about/alumni')}>Alumni</a>
-            <a onClick={link('/about/careers')}>Careers at AVIU</a>
+            <a onClick={link('/about/careers')}>Careers at AIU</a>
             <a onClick={link('/gallery')}>Gallery</a>
             <a onClick={link('/academic-calendar')}>Academic Calendar</a>
             <a onClick={link('/downloads')}>Downloads</a>
@@ -118,11 +116,8 @@ export function Footer() {
       <div className="footer-bottom">
         <span>© 2026 {universityInfo.name}</span>
         <span>Nabweru, Wakiso · Uganda &nbsp; / &nbsp; {universityInfo.tagline}</span>
-        <a onClick={link('/privacy')} style={{ cursor: 'pointer' }}>Privacy</a>
-        <a onClick={link('/terms')} style={{ cursor: 'pointer' }}>Terms</a>
-        <a onClick={link('/cookies')} style={{ cursor: 'pointer' }}>Cookies</a>
-        <a onClick={link('/accessibility')} style={{ cursor: 'pointer' }}>Accessibility</a>
-        <a onClick={link('/elearning')} style={{ cursor: 'pointer' }}>E-Learning</a>
+        <a onClick={link('/privacy')} style={{ cursor: 'pointer' }}>Privacy &amp; terms</a>
+        <a href="#/elearning" onClick={(e) => { e.preventDefault(); navigate('/elearning'); }} style={{ cursor: 'pointer' }}>E-Learning</a>
       </div>
     </footer>
   );
