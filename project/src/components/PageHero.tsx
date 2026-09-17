@@ -1,6 +1,5 @@
 import { type ReactNode } from 'react';
 import { BackgroundCarousel } from '@/components/BackgroundCarousel';
-import { defaultPageVideos } from '@/data/pageVideos';
 
 export function PageHero({
   eyebrow,
@@ -8,21 +7,16 @@ export function PageHero({
   subtitle,
   children,
   images,
-  videos,
 }: {
   eyebrow: string;
   title: ReactNode;
   subtitle?: string;
   children?: ReactNode;
   images?: string[];
-  /** YouTube IDs for muted autoplay background */
-  videos?: string[];
 }) {
-  const bgVideos = videos && videos.length > 0 ? videos : defaultPageVideos;
-
   return (
     <section className="page-hero">
-      <BackgroundCarousel images={images} videos={bgVideos} overlay={0.8} />
+      <BackgroundCarousel images={images} />
       <div className="page-hero-inner">
         <div className="eyebrow">
           <span className="eyebrow-line" /> {eyebrow}

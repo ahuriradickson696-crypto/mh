@@ -2,24 +2,14 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Volume2, VolumeX, X, GripVertical, ChevronDown, ChevronUp } from 'lucide-react';
 
 const VIDEOS = [
-  { id: 'XPQdBYI9vcU', label: 'Installation' },
-  { id: 'qqWsn74VlT0', label: 'VC message' },
-  { id: 'cQWuuKjoh44', label: 'Facilities' },
-  { id: 'aTqd3eX377U', label: 'Faculty' },
-  { id: 'gOdpEUC96vY', label: 'Update' },
+  { id: '7bcnZQhDfzM', label: 'Campus 1' },
+  { id: 'AS6sHqFZek4', label: 'Campus 2' },
+  { id: '-Z3M-jtCSDU', label: 'Campus 3' },
 ];
 
 type Pos = { x: number; y: number };
 
 const STORAGE_KEY = 'aviu_yt_fab_pos';
-
-function defaultPos(): Pos {
-  if (typeof window === 'undefined') return { x: 12, y: 120 };
-  const isMobile = window.innerWidth < 700;
-  // Mobile: lower-left, clear of WhatsApp
-  if (isMobile) return { x: 10, y: Math.max(80, window.innerHeight - 260) };
-  return { x: 16, y: Math.max(100, window.innerHeight - 300) };
-}
 
 function loadPos(): Pos {
   try {
@@ -31,9 +21,14 @@ function loadPos(): Pos {
   } catch {
     /* ignore */
   }
-  return defaultPos();
+  // Default: bottom of the screen (auto video starts at bottom)
+  return { x: 16, y: typeof window !== 'undefined' ? Math.max(8, window.innerHeight - 320) : 500 };
 }
 
+/**
+ * Floating, draggable YouTube players on every page.
+ * Muted by default — user turns sound on. Collapsible.
+ */
 export function FloatingYouTube() {
   const [pos, setPos] = useState<Pos>(loadPos);
   const [muted, setMuted] = useState(true);
@@ -41,37 +36,23 @@ export function FloatingYouTube() {
   const [active, setActive] = useState(0);
   const [hidden, setHidden] = useState(false);
   const dragging = useRef(false);
-  // Auto-advance to next video every 45 seconds
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setActive((a) => (a + 1) % VIDEOS.length);
-    }, 45000);
-    return () => window.clearInterval(id);
-  }, []);
   const offset = useRef({ x: 0, y: 0 });
   const panelRef = useRef<HTMLDivElement>(null);
 
   const clamp = useCallback((x: number, y: number): Pos => {
-    const w = panelRef.current?.offsetWidth || 260;
-    const h = panelRef.current?.offsetHeight || 180;
-    const maxX = Math.max(0, window.innerWidth - w - 6);
-    const maxY = Math.max(0, window.innerHeight - h - 6);
+    const w = panelRef.current?.offsetWidth || 280;
+    const h = panelRef.current?.offsetHeight || 200;
+    const maxX = Math.max(0, window.innerWidth - w - 8);
+    const maxY = Math.max(0, window.innerHeight - h - 8);
     return {
-      x: Math.min(Math.max(4, x), maxX),
-      y: Math.min(Math.max(4, y), maxY),
+      x: Math.min(Math.max(8, x), maxX),
+      y: Math.min(Math.max(8, y), maxY),
     };
   }, []);
 
   useEffect(() => {
-    const onResize = () => setPos((p) => clamp(p.x, p.y));
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, [clamp]);
-
-  useEffect(() => {
     const onMove = (e: PointerEvent) => {
       if (!dragging.current) return;
-      e.preventDefault();
       const next = clamp(e.clientX - offset.current.x, e.clientY - offset.current.y);
       setPos(next);
     };
@@ -87,15 +68,11 @@ export function FloatingYouTube() {
         return p;
       });
     };
-    window.addEventListener('pointermove', onMove, { passive: false });
+    window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
-    window.addEventListener('touchmove', onMove as unknown as EventListener, { passive: false });
-    window.addEventListener('touchend', onUp);
     return () => {
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerup', onUp);
-      window.removeEventListener('touchmove', onMove as unknown as EventListener);
-      window.removeEventListener('touchend', onUp);
     };
   }, [clamp]);
 
@@ -103,11 +80,7 @@ export function FloatingYouTube() {
     if ((e.target as HTMLElement).closest('button, a, iframe')) return;
     dragging.current = true;
     offset.current = { x: e.clientX - pos.x, y: e.clientY - pos.y };
-    try {
-      (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
-    } catch {
-      /* ignore */
-    }
+    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
   };
 
   if (hidden) {
@@ -117,6 +90,7 @@ export function FloatingYouTube() {
         className="yt-fab-show"
         aria-label="Show campus videos"
         onClick={() => setHidden(false)}
+        style={{ left: 16, bottom: 88 }}
       >
         ▶ Videos
       </button>
@@ -125,8 +99,6 @@ export function FloatingYouTube() {
 
   const vid = VIDEOS[active];
   const muteParam = muted ? 1 : 0;
-  // playsinline=1 is critical for iPhone
-  const embedSrc = `https://www.youtube.com/embed/${vid.id}?autoplay=1&mute=${muteParam}&loop=1&playlist=${vid.id}&controls=1&modestbranding=1&rel=0&playsinline=1&enablejsapi=1`;
 
   return (
     <div
@@ -158,11 +130,10 @@ export function FloatingYouTube() {
           <div className="yt-floating-player">
             <iframe
               key={`${vid.id}-${muteParam}`}
-              src={embedSrc}
+              src={`https://www.youtube.com/embed/${vid.id}?autoplay=1&mute=${muteParam}&loop=1&playlist=${vid.id}&controls=1&modestbranding=1&rel=0&playsinline=1`}
               title={vid.label}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              playsInline
             />
           </div>
           <div className="yt-floating-tabs">
@@ -177,7 +148,7 @@ export function FloatingYouTube() {
               </button>
             ))}
           </div>
-          <p className="yt-floating-hint">Drag anywhere · Tap unmute for sound</p>
+          <p className="yt-floating-hint">Drag to any side · Sound off until you unmute</p>
         </>
       )}
     </div>
