@@ -400,19 +400,33 @@ export function Home() {
         </div>
         <div className="partners-grid">
           {partners.map((partner) => (
-            <div className="partner-card partner-card-media" key={partner.name}>
-              <div className="partner-img-wrap">
-                <img src={partner.image} alt={partner.name} loading="lazy" />
-              </div>
+            <div className="partner-card" key={partner.name}>
               <strong>{partner.name}</strong>
               <span>{partner.type}</span>
-              <p className="partner-desc">{partner.description}</p>
             </div>
           ))}
         </div>
       </section>
 
       
+      <section className="section-pad" style={{ paddingTop: 0, paddingBottom: 0 }}>
+        <div className="elearn-banner">
+          <div>
+            <h3>Study on your phone</h3>
+            <p>
+              Use the AVIU E-Learning Portal for classes, materials, and results — built to work on mobile.
+            </p>
+          </div>
+          <a
+            className="btn-light"
+            href="/elearning" onClick={(e) => { e.preventDefault(); navigate('/elearning'); }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open E-Learning Portal
+          </a>
+        </div>
+      </section>
 
       <TikTokStrip
         items={galleryTikToks.filter((t) => ['campus', 'admissions', 'graduation'].includes(t.category)).slice(0, 4)}

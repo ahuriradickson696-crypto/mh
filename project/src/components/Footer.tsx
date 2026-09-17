@@ -50,6 +50,7 @@ export function Footer() {
             <a href="https://www.facebook.com/avanceinternationaluniversity" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><Facebook size={15} /></a>
             <a href="https://www.tiktok.com/@avancestudentpulse" target="_blank" rel="noopener noreferrer" aria-label="TikTok Student Pulse"><Music2 size={15} /></a>
             <a href="https://www.tiktok.com/@avance.marketing" target="_blank" rel="noopener noreferrer" aria-label="TikTok Marketing"><Music2 size={15} /></a>
+            <a href="#/elearning" onClick={(e) => { e.preventDefault(); navigate('/elearning'); }} aria-label="E-learning"><Youtube size={15} /></a>
           </div>
         </div>
         <div className="footer-links">
@@ -121,6 +122,7 @@ export function Footer() {
         <a onClick={link('/terms')} style={{ cursor: 'pointer' }}>Terms</a>
         <a onClick={link('/cookies')} style={{ cursor: 'pointer' }}>Cookies</a>
         <a onClick={link('/accessibility')} style={{ cursor: 'pointer' }}>Accessibility</a>
+        <a onClick={link('/elearning')} style={{ cursor: 'pointer' }}>E-Learning</a>
       </div>
     </footer>
   );

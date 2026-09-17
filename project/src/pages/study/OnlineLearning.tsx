@@ -40,11 +40,19 @@ export function OnlineLearning() {
       <section className="section-pad" style={{ paddingBottom: 0 }}>
         <div className="elearn-banner">
           <div>
-            <h3>Flexible online learning</h3>
+            <h3>AVIU E-Learning Portal</h3>
             <p>
               Access live classes, video lessons, assignments, and your student dashboard on any device — including your phone.
             </p>
           </div>
+          <a
+            className="btn-light"
+            href="#/elearning" onClick={(e) => { e.preventDefault(); navigate('/elearning'); }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open E-Learning Portal <ArrowRight size={16} />
+          </a>
         </div>
       </section>
 
@@ -69,7 +77,7 @@ export function OnlineLearning() {
       <section className="section-pad alt-bg">
         <div className="two-col-layout">
           <div className="col-half">
-            <div className="eyebrow"><span className="eyebrow-line" /> Online learning</div>
+            <div className="eyebrow"><span className="eyebrow-line" /> E-Learning platform</div>
             <h2>Our virtual <em>classroom.</em></h2>
             <p>AVIU's technology-enhanced learning platform brings the classroom to you. With over 3 million video lessons and 2,500+ daily live classes, our e-learning system is designed for engagement, accessibility, and academic rigour.</p>
             <p>Students need a reliable internet connection, a computer or tablet, and a quiet study space. Our IT helpdesk provides onboarding support for all new online learners.</p>

@@ -38,11 +38,16 @@ const requirements = [
   'Application fee payment receipt',
   'Two letters of recommendation (postgraduate programmes)',
   'Proof of English proficiency (international applicants)',
-  'Curriculum vitae (for postgraduate applicants, where requested)',
-  'Research proposal (only if applying to a research pathway when available)',
+  'Curriculum vitae (for Masters and PhD applicants)',
+  'Research proposal (for PhD applicants)',
 ];
 
-const tuitionComingSoon = true;
+const tuition = [
+  { programme: 'Undergraduate Programmes', per: 'UGX 1,200,000', perLabel: 'per semester' },
+  { programme: 'Postgraduate Diplomas', per: 'UGX 1,800,000', perLabel: 'per semester' },
+  { programme: 'Diploma Programmes', per: 'UGX 800,000', perLabel: 'per semester' },
+  { programme: 'Certificate Programmes', per: 'UGX 500,000', perLabel: 'per semester' },
+];
 
 const intakes = [
   { name: 'January Intake', period: 'January - April', applications: 'October - December', status: 'Open Now' },
@@ -148,15 +153,29 @@ export function Admissions() {
               <span className="eyebrow-line" /> Tuition &amp; fees
             </div>
             <h2>
-              Fee schedule <em>coming soon.</em>
+              An affordable <em>education.</em>
             </h2>
-            <p style={{ color: 'var(--ink-soft)', maxWidth: 640, marginTop: 12, lineHeight: 1.7 }}>
-              Detailed tuition, payment plans and any bursary information will be published here once
-              confirmed by the University. Contact admissions@aviu.ac.ug or +256 700 670 691 for the
-              latest guidance for your programme and intake.
-            </p>
           </div>
         </div>
+        <div className="tuition-table">
+          <div className="tuition-row tuition-header">
+            <span>Programme Type</span>
+            <span>Tuition</span>
+            <span>Frequency</span>
+          </div>
+          {tuition.map((row) => (
+            <div className="tuition-row" key={row.programme}>
+              <span>{row.programme}</span>
+              <strong>{row.per}</strong>
+              <span>{row.perLabel}</span>
+            </div>
+          ))}
+        </div>
+        <p className="tuition-note">
+          Fees are indicative and subject to annual review. Flexible payment
+          plans and scholarships are available for qualifying students. See our
+          full fee structure on the Fees page.
+        </p>
       </section>
 
       <section className="section-pad">
